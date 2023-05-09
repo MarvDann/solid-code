@@ -1,4 +1,4 @@
-# Solid Code VSCode Extension starter using Solid JS in webviews
+# A VSCode Extension starter using Solid JS in webviews
 
 ## Features in this project
 
