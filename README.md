@@ -1,3 +1,5 @@
+# Solid Code VSCode Extension starter using Solid JS in webviews
+
 ## Features in this project
 
 The webviews folder is built with vite and compiles the solid js code into the out/webviews folder
