@@ -6,16 +6,89 @@
   "engines": {
     "vscode": "^1.78.0"
   },
+  "publisher": "marvdann",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarvDann/solid-code"
+  },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "solid-code.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "solid-code.licences",
+        "title": "Software Licence Agreement"
+      },
+      {
+        "command": "solid-code.changeEula",
+        "title": "Toggle EULA"
+      },
+      {
+        "command": "solid-code.changePrivacy",
+        "title": "Toggle Privacy"
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "licences",
+        "title": "Welcome to Solid Code",
+        "description": "To use this extension you must accept our EULA and privacy policy.",
+        "steps": [
+          {
+            "id": "accepteula",
+            "title": "Accept EULA",
+            "description": "Press the button below to accept our Software end user license agreement.\n[Accept EULA](command:solid-code.changeEula)",
+            "media": {
+              "markdown": "media/EULA.md"
+            },
+            "completionEvents": [
+              "onSettingChanged:solid-code.eula"
+            ]
+          }, {
+            "id": "acceptprivacy",
+            "title": "Accept the Privacy Policy",
+            "description": "You must accept our privacy policy before using this extension.\n[Accept Privacy Policy](command:solid-code.changePrivacy)",
+            "media": {
+              "markdown": "media/PrivacyPolicy.md"
+            },
+            "completionEvents": [
+              "onSettingChanged:solid-code.privacy"
+            ]
+          }
+        ]
+      }
+    ],
+    "configuration": {
+			"title": "Eggplant Test Studio",
+			"properties": {
+				"solid-code.eula": {
+					"description": "EULA Accepted",
+					"type": "boolean",
+          "default": false,
+          "scope": "machine-overridable",
+          "readOnly": true
+				},
+        "solid-code.privacy": {
+					"description": "Privacy Policy Accepted",
+					"type": "boolean",
+          "default": false,
+          "scope": "machine-overridable",
+          "readOnly": true
+				}
+			}
+		},
+    "viewsWelcome": [
+      {
+        "view": "workbench.explorer.emptyView",
+        "contents": "You can have paragraphs of text here. You can have [links](https://code.visualstudio.com) to external sources or [internal commands](command:solid-code.helloWorld).\nUse new lines to have new paragraphs.\nPlace a link alone in a paragraph to make it a button\n[Hello](command:solid-code.helloWorld)"
       }
     ]
   },

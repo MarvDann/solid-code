@@ -10,14 +10,34 @@ export function activate(context: vscode.ExtensionContext) {
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension "solid-code" is now active!')
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  const disposable = vscode.commands.registerCommand('solid-code.helloWorld', () => {
-    HelloWorldPanel.render(context.extensionUri);
-  })
+  context.subscriptions.push(vscode.commands.registerCommand('solid-code.licences', async () => {
+		vscode.commands.executeCommand(`workbench.action.openWalkthrough`, `marvdann.solid-code#licences`)
+	}));
 
-  context.subscriptions.push(disposable)
+  const validateAndRun = async (fn: () => void) => {
+    const config = vscode.workspace.getConfiguration('solid-code')
+
+    if (!config.get('eula') || !config.get('privacy')) {
+      await vscode.commands.executeCommand('solid-code.licences')
+    } else {
+      fn()
+    }
+  }
+
+  context.subscriptions.push(vscode.commands.registerCommand('solid-code.helloWorld', async () => {
+      validateAndRun(() => HelloWorldPanel.render(context.extensionUri))
+  }))
+
+  context.subscriptions.push(vscode.commands.registerCommand('solid-code.changeEula', async () => {
+    console.log('accepting EULA')
+		await vscode.workspace.getConfiguration('solid-code').update('eula', true)
+	}));
+
+  context.subscriptions.push(vscode.commands.registerCommand('solid-code.changePrivacy', async () => {
+    console.log('accepting Privacy')
+		await vscode.workspace.getConfiguration('solid-code').update('privacy', true);
+	}));
+
 }
 
 // This method is called when your extension is deactivated
